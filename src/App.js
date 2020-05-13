@@ -6,76 +6,43 @@ class App extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            topright: '0',
-            topleft: '0',
-            bottomright: '0',
-            bottomleft: '0',
-            
+            pixelBorder: {
+                topright: '0',
+                topleft: '0',
+                bottomright: '0',
+                bottomleft: '0',
+            },
+            porcentBorder: {
+                topright: '0',
+                topleft: '0',
+                bottomright: '0',
+                bottomleft: '0',
+            }
+
+
         }
 
-        this.handleRightTopRadius = this.handleRightTopRadius.bind(this);
-        this.handleLeftTopRadius = this.handleLeftTopRadius.bind(this);
-        this.handleRightBottomRadius = this.handleRightBottomRadius.bind(this);
-        this.handleLeftBottomRadius = this.handleLeftBottomRadius.bind(this);
-
-
+        this.handlePixelBorder = this.handlePixelBorder.bind(this);
     }
 
 
-    handleLeftTopRadius(event) {
+    handlePixelBorder(event) {
 
-        this.setState({ topleft: event.target.value })
+        const statePixel = this.state.pixelBorder;
 
-        const state = this.state.topleft
+        statePixel[event.target.name] = event.target.value
 
-        const pixelValue = state + 'px';
+        this.setState({ pixelBorder: statePixel })
 
-        const element = document.getElementById('box');
+        const elementBox = document.getElementById('box')
 
-        element.style.borderTopLeftRadius = pixelValue
+        elementBox.style.borderRadius = `
 
-    }
-
-    handleRightTopRadius(event) {
-
-        this.setState({ topright: event.target.value })
-
-        const state = this.state.topright
-
-        const pixelValue = state + 'px';
-
-        const element = document.getElementById('box');
-
-        element.style.borderTopRightRadius = pixelValue
-
-    }
-
-    handleLeftBottomRadius(event) {
-
-        this.setState({ bottomleft: event.target.value })
-
-        const state = this.state.bottomleft
-
-        const pixelValue = state + 'px';
-
-        const element = document.getElementById('box');
-
-        element.style.borderBottomLeftRadius = pixelValue;
-
-
-    }
-
-    handleRightBottomRadius(event) {
-
-        this.setState({ bottomright: event.target.value })
-
-        const state = this.state.bottomright
-
-        const pixelValue = state + 'px';
-
-        const element = document.getElementById('box');
-
-        element.style.borderBottomRightRadius = pixelValue
+            ${this.state.pixelBorder.topleft}px 
+            ${this.state.pixelBorder.topright}px
+            ${this.state.pixelBorder.bottomright}px
+            ${this.state.pixelBorder.bottomleft}px   
+        `
 
     }
 
@@ -93,38 +60,42 @@ class App extends Component {
 
                             <div className="control-option">
                                 <strong>Top-Right</strong>
-                                <input type="range"
-                                    name=""
+                                <input
+                                    type="range"
+                                    name="topright"
                                     id="rangeTopRight"
-                                    value={this.state.topright}
-                                    onChange={this.handleRightTopRadius} />
+                                    value={this.state.pixelBorder.topright}
+                                    onChange={this.handlePixelBorder} />
                             </div>
 
                             <div className="control-option">
                                 <strong>Top-Left</strong>
-                                <input type="range"
-                                    name=""
+                                <input
+                                    type="range"
+                                    name="topleft"
                                     id=""
-                                    value={this.state.topleft}
-                                    onChange={this.handleLeftTopRadius} />
+                                    value={this.state.pixelBorder.topleft}
+                                    onChange={this.handlePixelBorder} />
                             </div>
 
                             <div className="control-option">
                                 <strong>Bottom-Right</strong>
-                                <input type="range"
-                                    name=""
+                                <input
+                                    type="range"
+                                    name="bottomright"
                                     id=""
-                                    value={this.state.bottomright}
-                                    onChange={this.handleRightBottomRadius} />
+                                    value={this.state.pixelBorder.bottomright}
+                                    onChange={this.handlePixelBorder} />
                             </div>
 
                             <div className="control-option">
                                 <strong>Bottom-Left</strong>
-                                <input type="range"
-                                    name=""
+                                <input
+                                    type="range"
+                                    name="bottomleft"
                                     id=""
-                                    value={this.state.bottomleft}
-                                    onChange={this.handleLeftBottomRadius} />
+                                    value={this.state.pixelBorder.bottomleft}
+                                    onChange={this.handlePixelBorder} />
                             </div>
 
                         </div>
@@ -133,20 +104,46 @@ class App extends Component {
 
 
                     <div className='result'>
-                        <p>
-                            <strong>
-                                -webkit-border-radius: {this.state.topleft}px
-                                 {this.state.topright}px
-                                    {this.state.bottomright}px
-                                    {this.state.bottomleft}px;
-                            </strong>
-                            <strong>
-                                -moz-border-radius: 20px;
-                            </strong>
-                            <strong>
-                                border-radius: 20px;
-                            </strong>
-                        </p>
+
+                        <strong>
+                            {
+                                `-moz-border-radius: 
+                                ${this.state.pixelBorder.topleft}px
+                                ${this.state.pixelBorder.topright}px
+                                ${this.state.pixelBorder.bottomright}px
+                                ${this.state.pixelBorder.bottomleft}px;`
+                            }
+                        </strong>
+                        <strong>
+                            {
+                                `-ms-border-radius: 
+                                ${this.state.pixelBorder.topleft}px
+                                ${this.state.pixelBorder.topright}px
+                                ${this.state.pixelBorder.bottomright}px
+                                ${this.state.pixelBorder.bottomleft}px;`
+                            }
+                        </strong>
+                        <strong>
+                            {
+                                `-webkit-border-radius: 
+                                ${this.state.pixelBorder.topleft}px
+                                ${this.state.pixelBorder.topright}px
+                                ${this.state.pixelBorder.bottomright}px
+                                ${this.state.pixelBorder.bottomleft}px;`
+                            }
+                        </strong>
+                        <strong>
+                            {
+                                `border-radius: 
+                                ${this.state.pixelBorder.topleft}px
+                                ${this.state.pixelBorder.topright}px
+                                ${this.state.pixelBorder.bottomright}px
+                                ${this.state.pixelBorder.bottomleft}px;`
+                            }
+                        </strong>
+
+
+
                     </div>
 
 
